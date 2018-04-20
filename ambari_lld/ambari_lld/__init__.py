@@ -12,8 +12,8 @@ def parse_arguments():
         description='Return a Zabbix LLD JSON resource for all available Ambari checks')
     parser.add_argument('-a', '--ambari-endpoint', help='Ambari API address',
                         default='http://localhost:8080')
-    parser.add_argument('-u', '--user', help='Ambari user', default='admin')
-    parser.add_argument('-p', '--password', help='Ambari user password', default='admin')
+    # parser.add_argument('-u', '--user', help='Ambari user', default='admin')
+    # parser.add_argument('-p', '--password', help='Ambari user password', default='admin')
     parser.add_argument('-n', '--hostname',
                         help='Filter alerts based on this hostname', default='*')
 
@@ -27,7 +27,7 @@ def get_alerts(cluster_name, hostname_filter):
     """
     filtered_alerts = []
     url = "%s/clusters/%s/alerts" % (AMBARI_API["url"], cluster_name)
-    alerts = requests.get(url, headers=AMBARI_API["headers"], auth=AMBARI_API["auth"]).json()
+    alerts = requests.get(url, headers=AMBARI_API["headers"]).json()
     for alert in alerts["items"]:
         if (alert["Alert"]["host_name"] == hostname_filter) \
            | (hostname_filter == '*') \
@@ -42,7 +42,7 @@ def get_cluster_name():
     """
     url = "%s/clusters/" % (AMBARI_API["url"])
     try:
-        cluster_info = requests.get(url, headers=AMBARI_API["headers"], auth=AMBARI_API["auth"])
+        cluster_info = requests.get(url, headers=AMBARI_API["headers"])
     except requests.exceptions.ConnectionError:
         print "Can't connect to %s - Connection refused" % (url)
         sys.exit(1)
@@ -77,7 +77,7 @@ def main():
     args = parse_arguments()
     AMBARI_API["url"] = "%s/api/v1" % (args.ambari_endpoint)
     AMBARI_API["headers"] = {'X-Requested-By': 'ambari'}
-    AMBARI_API["auth"] = (args.user, args.password)
+    # AMBARI_API["auth"] = (args.user, args.password)
     hdp_cluster = get_cluster_name()
     print_lld_json(alerts=get_alerts(hdp_cluster, args.hostname))
 
