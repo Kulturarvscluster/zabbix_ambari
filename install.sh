@@ -5,10 +5,11 @@ set -x
 
 SCRIPT_DIR=$(dirname $(readlink -f $BASH_SOURCE[0]))
 
-HOST=root@kac-proj-000
+HOST=${1:-root@kac-proj-000}
 
 cd $SCRIPT_DIR
 
+ssh $HOST sudo yum -y install jq
 
 scp ambari_lld.py $HOST:/var/lib/zabbix/
 
