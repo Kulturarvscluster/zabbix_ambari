@@ -15,8 +15,10 @@ def parse_arguments():
     # parser.add_argument('-u', '--user', help='Ambari user', default='admin')
     # parser.add_argument('-p', '--password', help='Ambari user password', default='admin')
     parser.add_argument('-n', '--hostname',
-                        help='Filter alerts based on this hostname', default='*')
-
+                        help='Filter alerts based on this hostname',
+                        nargs='?',
+                        const='*',
+                        type=str)
     return parser.parse_args()
 
 def get_alerts(cluster_name, hostname_filter):
@@ -77,7 +79,6 @@ def main():
     args = parse_arguments()
     AMBARI_API["url"] = "%s/api/v1" % (args.ambari_endpoint)
     AMBARI_API["headers"] = {'X-Requested-By': 'ambari'}
-    # AMBARI_API["auth"] = (args.user, args.password)
     hdp_cluster = get_cluster_name()
     print_lld_json(alerts=get_alerts(hdp_cluster, args.hostname))
 
