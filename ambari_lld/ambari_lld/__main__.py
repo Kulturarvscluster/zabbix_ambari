@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 
 import ambari_lld
 
