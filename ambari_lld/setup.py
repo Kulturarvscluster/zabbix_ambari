@@ -31,6 +31,8 @@ setup(
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),
     install_requires=['requests'],
     entry_points={
-        'console_scripts': ['ambari_zabbix_lld=ambari_lld.cli:main'],
+        'console_scripts': [
+            'ambari_zabbix_lld=ambari_lld.__main__:main'
+        ],
     },
 )

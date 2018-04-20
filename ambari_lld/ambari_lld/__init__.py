@@ -81,6 +81,3 @@ def main():
     AMBARI_API["headers"] = {'X-Requested-By': 'ambari'}
     hdp_cluster = get_cluster_name()
     print_lld_json(alerts=get_alerts(hdp_cluster, args.hostname))
-
-if __name__ == '__main__':
-    main()

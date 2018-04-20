@@ -1,5 +1,9 @@
-
 import ambari_lld
 
-if __name__ == '__main__':
+
+def main():
     ambari_lld.main()
+
+
+if __name__ == '__main__':
+    main()
