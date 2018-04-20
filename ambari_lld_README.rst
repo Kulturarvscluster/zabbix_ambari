@@ -8,7 +8,7 @@ to create Low-Level-Discovered items.
 
 Usage::
 
-  usage: ambari_zabbix_lld [-h] [-a AMBARI_ENDPOINT] [-u USER] [-p PASSWORD]
+  usage: ambari_lld.py [-h] [-a AMBARI_ENDPOINT] [-u USER] [-p PASSWORD]
                   [-n HOSTNAME]
 
   Return a Zabbix LLD JSON resource for all available Ambari checks
