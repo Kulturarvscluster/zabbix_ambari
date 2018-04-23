@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
-    <version>3.2</version>
-    <date>2017-05-12T14:58:44Z</date>
+    <version>3.4</version>
+    <date>2018-04-23T12:17:45Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -9,8 +9,8 @@
     </groups>
     <templates>
         <template>
-            <template>Ambari Alerts</template>
-            <name>Ambari Alerts</name>
+            <template>Template Ambari Alerts</template>
+            <name>Template Ambari Alerts</name>
             <description>Autodiscovery ambari alerts related to a host part of that Ambari cluster.</description>
             <groups>
                 <group>
@@ -29,8 +29,8 @@
                     <type>0</type>
                     <snmp_community/>
                     <snmp_oid/>
-                    <key>ambari.alerts.discovery</key>
-                    <delay>3600</delay>
+                    <key>ambari.alerts.discovery[{$AMBARI_URL},]</key>
+                    <delay>1m</delay>
                     <status>0</status>
                     <allowed_hosts/>
                     <snmpv3_contextname/>
@@ -40,7 +40,6 @@
                     <snmpv3_authpassphrase/>
                     <snmpv3_privprotocol>0</snmpv3_privprotocol>
                     <snmpv3_privpassphrase/>
-                    <delay_flex/>
                     <params/>
                     <ipmi_sensor/>
                     <authtype>0</authtype>
@@ -54,24 +53,22 @@
                         <formula/>
                         <conditions/>
                     </filter>
-                    <lifetime>1</lifetime>
+                    <lifetime>1d</lifetime>
                     <description/>
                     <item_prototypes>
                         <item_prototype>
-                            <name>{#AMAL_NAME}</name>
+                            <name>{#AMAL_SVC}: {#AMAL_NAME}</name>
                             <type>0</type>
                             <snmp_community/>
-                            <multiplier>0</multiplier>
                             <snmp_oid/>
                             <key>ambari.alert[{#AMAL_URL}]</key>
-                            <delay>120</delay>
-                            <history>7</history>
+                            <delay>5m</delay>
+                            <history>7d</history>
                             <trends>0</trends>
                             <status>0</status>
                             <value_type>4</value_type>
                             <allowed_hosts/>
                             <units/>
-                            <delta>0</delta>
                             <snmpv3_contextname/>
                             <snmpv3_securityname/>
                             <snmpv3_securitylevel>0</snmpv3_securitylevel>
@@ -79,11 +76,8 @@
                             <snmpv3_authpassphrase/>
                             <snmpv3_privprotocol>0</snmpv3_privprotocol>
                             <snmpv3_privpassphrase/>
-                            <formula>1</formula>
-                            <delay_flex/>
                             <params/>
                             <ipmi_sensor/>
-                            <data_type>0</data_type>
                             <authtype>0</authtype>
                             <username/>
                             <password/>
@@ -99,18 +93,21 @@
                             </applications>
                             <valuemap/>
                             <logtimefmt/>
+                            <preprocessing/>
+                            <jmx_endpoint/>
                             <application_prototypes/>
+                            <master_item_prototype/>
                         </item_prototype>
                     </item_prototypes>
                     <trigger_prototypes>
                         <trigger_prototype>
-                            <expression>{Ambari Alerts:ambari.alert[{#AMAL_URL}].str(CRITICAL,#3)}=1</expression>
+                            <expression>{Template Ambari Alerts:ambari.alert[{#AMAL_URL}].str(CRITICAL,#3)}=1</expression>
                             <recovery_mode>0</recovery_mode>
                             <recovery_expression/>
-                            <name>CRITICAL condition for {#AMAL_NAME}</name>
+                            <name>{#AMAL_SVC}:{#AMAL_NAME} is in CRITICAL condition</name>
                             <correlation_mode>0</correlation_mode>
                             <correlation_tag/>
-                            <url/>
+                            <url>{$AMBARI_URL}</url>
                             <status>0</status>
                             <priority>4</priority>
                             <description/>
@@ -120,15 +117,15 @@
                             <tags/>
                         </trigger_prototype>
                         <trigger_prototype>
-                            <expression>{Ambari Alerts:ambari.alert[{#AMAL_URL}].str(WARNING,#3)}=1</expression>
+                            <expression>{Template Ambari Alerts:ambari.alert[{#AMAL_URL}].str(MAINTENANCE,#3)}=1</expression>
                             <recovery_mode>0</recovery_mode>
                             <recovery_expression/>
-                            <name>WARNING condition for {#AMAL_NAME}</name>
+                            <name>{#AMAL_SVC}:{#AMAL_NAME} is in MAINTENANCE</name>
                             <correlation_mode>0</correlation_mode>
                             <correlation_tag/>
-                            <url/>
+                            <url>{$AMBARI_URL}</url>
                             <status>0</status>
-                            <priority>2</priority>
+                            <priority>1</priority>
                             <description/>
                             <type>0</type>
                             <manual_close>0</manual_close>
@@ -136,15 +133,15 @@
                             <tags/>
                         </trigger_prototype>
                         <trigger_prototype>
-                            <expression>{Ambari Alerts:ambari.alert[{#AMAL_URL}].str(MAINTENANCE,#3)}=1</expression>
+                            <expression>{Template Ambari Alerts:ambari.alert[{#AMAL_URL}].str(WARNING,#3)}=1</expression>
                             <recovery_mode>0</recovery_mode>
                             <recovery_expression/>
-                            <name>{#AMAL_NAME} is in MAINTENANCE</name>
+                            <name>{#AMAL_SVC}:{#AMAL_NAME} is in WARNING condition</name>
                             <correlation_mode>0</correlation_mode>
                             <correlation_tag/>
-                            <url/>
+                            <url>{$AMBARI_URL}</url>
                             <status>0</status>
-                            <priority>1</priority>
+                            <priority>2</priority>
                             <description/>
                             <type>0</type>
                             <manual_close>0</manual_close>
@@ -154,10 +151,16 @@
                     </trigger_prototypes>
                     <graph_prototypes/>
                     <host_prototypes/>
+                    <jmx_endpoint/>
                 </discovery_rule>
             </discovery_rules>
             <httptests/>
-            <macros/>
+            <macros>
+                <macro>
+                    <macro>{$AMBARI_URL}</macro>
+                    <value>http://kac-abri-001.kach.sblokalnet:8080</value>
+                </macro>
+            </macros>
             <templates/>
             <screens/>
         </template>
