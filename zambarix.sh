@@ -35,12 +35,12 @@ ssh kac-adm-001 <<EOF
 set -e
 set -x
 #Create password
-PASSWORD=\$(openssl rand -base64 12)
-echo -e "\$PASSWORD\n\$PASSWORD\n" | ipa user-mod $username --password
+INITIAL_PASSWORD=\$(openssl rand -base64 12)
+echo -e "\${INITIAL_PASSWORD}\n\${INITIAL_PASSWORD}\n" | ipa user-mod $username --password
 
-PASSWORD2=\$(openssl rand -base64 12)
-echo -e "\$PASSWORD\n\$PASSWORD2\n\$PASSWORD2\n" | kinit $username -c /tmp/null
-echo $username: \$PASSWORD2
+PASSWORD=\$(openssl rand -base64 12)
+echo -e "\${INITIAL_PASSWORD}\n\${PASSWORD}\n\${PASSWORD}\n" | kinit $username -c /tmp/null
+echo $username: \${PASSWORD}
 EOF
 
 
