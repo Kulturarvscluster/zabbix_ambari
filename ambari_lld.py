@@ -68,6 +68,7 @@ def print_lld_json(alerts=[]):
     for alert in alerts:
         lld = {}
         lld["{#AMAL_URL}"] = alert["href"]
+        lld["{#AMAL_ID}"] = alert["Alert"]["id"]
         lld["{#AMAL_NAME}"] = alert["Alert"]["definition_name"]
         lld["{#AMAL_SVC}"] = alert["Alert"]["service_name"]
         lld["{#AMAL_HOSTNAME}"] = alert["Alert"]["host_name"]
