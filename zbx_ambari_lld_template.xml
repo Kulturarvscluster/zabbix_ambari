@@ -99,7 +99,7 @@
                     <description/>
                     <item_prototypes>
                         <item_prototype>
-                            <name>{#AMAL_SVC}: {#AMAL_NAME}</name>
+                            <name>{#AMAL_SVC}:{#AMAL_HOSTNAME} {#AMAL_NAME}</name>
                             <type>0</type>
                             <snmp_community/>
                             <snmp_oid/>
@@ -146,7 +146,7 @@
                             <expression>{Template Ambari Alerts:ambari.alert[{#AMAL_ID}].str(CRITICAL,#3)}=1</expression>
                             <recovery_mode>0</recovery_mode>
                             <recovery_expression/>
-                            <name>{#AMAL_SVC}:{#AMAL_NAME} is in CRITICAL condition</name>
+                            <name>{#AMAL_SVC}:{#AMAL_HOSTNAME} {#AMAL_NAME} is in CRITICAL condition</name>
                             <correlation_mode>0</correlation_mode>
                             <correlation_tag/>
                             <url>{$AMBARI_URL}</url>
@@ -162,7 +162,7 @@
                             <expression>{Template Ambari Alerts:ambari.alert[{#AMAL_ID}].str(MAINTENANCE,#3)}=1</expression>
                             <recovery_mode>0</recovery_mode>
                             <recovery_expression/>
-                            <name>{#AMAL_SVC}:{#AMAL_NAME} is in MAINTENANCE</name>
+                            <name>{#AMAL_SVC}:{#AMAL_HOSTNAME} {#AMAL_NAME} is in MAINTENANCE</name>
                             <correlation_mode>0</correlation_mode>
                             <correlation_tag/>
                             <url>{$AMBARI_URL}</url>
@@ -178,7 +178,7 @@
                             <expression>{Template Ambari Alerts:ambari.alert[{#AMAL_ID}].str(WARNING,#3)}=1</expression>
                             <recovery_mode>0</recovery_mode>
                             <recovery_expression/>
-                            <name>{#AMAL_SVC}:{#AMAL_NAME} is in WARNING condition</name>
+                            <name>{#AMAL_SVC}:{#AMAL_HOSTNAME} {#AMAL_NAME} is in WARNING condition</name>
                             <correlation_mode>0</correlation_mode>
                             <correlation_tag/>
                             <url>{$AMBARI_URL}</url>
